@@ -1,0 +1,9 @@
+%header.main-navbar-header
+	.container
+		.row
+			.navbar-header.inline-block
+				= link_to "MULTIVERSE", root_path, id: "logo"
+			.main-navbar.navbar-header.main-buttons
+				.nav.inline-block.margin-15px-fixed
+					%ul.navlist
+						%li= link_to "Logout", destroy_user_session_path, method: "delete", class: "menu-button"
