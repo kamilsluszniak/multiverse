@@ -3,7 +3,8 @@ require 'spec_helper'
 
 RSpec.feature "User signs up" do
 
-  let(:user) { create :user }
+    let(:user) { create :user }
+
 
   scenario 'with valid email and password' do
     sign_up_with 'test@email.com', 'password'

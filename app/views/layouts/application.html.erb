@@ -9,7 +9,10 @@
   </head>
 
   <body>
-  	
-    <%= yield %>
+    <%= render "layouts/header" %>
+  	<%= render "layouts/gamepanel" %>
+    <div id="game-field">
+      <%= yield %>
+    </div>
   </body>
 </html>
