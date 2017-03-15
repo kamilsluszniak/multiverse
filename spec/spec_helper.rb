@@ -23,7 +23,7 @@ require 'factory_girl_rails'
 RSpec.configure do |config|
   config.include ControllerHelpers, type: :controller
   config.include FactoryGirl::Syntax::Methods
-
+  ActiveRecord::Migration.maintain_test_schema!
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.
