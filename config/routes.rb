@@ -3,6 +3,16 @@ Rails.application.routes.draw do
   root 'static_pages#welcome'
 
   get 'static_pages/index', to: 'static_pages#index'
+  get 'planets_resources', to: 'planets#resources'
+
+  resources :planets do
+    member do
+      get :metal
+      get :crystal
+      get :hydrogen
+      get :solar
+    end
+  end
 
   get 'static_pages/welcome', to: 'static_pages#welcome'
 
