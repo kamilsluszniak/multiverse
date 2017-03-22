@@ -21,3 +21,10 @@
 
 en:
   hello: "Hello world"
+  planet:
+    actions:
+      resources:
+        title: "Resource buildings"
+        metal_mine: "Metal mine"
+        upgrade_metal: "Upgrade metal mine"
+        upgrading: "Upgrading"
