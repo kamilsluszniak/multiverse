@@ -15,6 +15,10 @@ RSpec.describe Planet, type: :model do
     it { should have_db_column :hydrogen }
     it { should have_db_column :energy }
     it { should have_db_column :resources_updated_at }
+    it { should have_db_column :metal_rdy_at }
+    it { should have_db_column :crystal_rdy_at }
+    it { should have_db_column :hydrogen_rdy_at }
+    it { should have_db_column :solar_rdy_at }
   end
 
   describe 'associations' do

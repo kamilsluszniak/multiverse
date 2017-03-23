@@ -2,6 +2,7 @@ class Planet < ApplicationRecord
   belongs_to :user, optional: true
   belongs_to :system
   validates :name, presence: true, allow_blank: false, length: { maximum: 16 }
+  before_create :set_ready_to_now
 
   def update_resources
     if self.resources_updated_at
@@ -94,6 +95,13 @@ class Planet < ApplicationRecord
       self.solar_lvl = lvl + 1
       self.save!
     end
+  end
+
+  def set_ready_to_now
+    self.metal_rdy_at = Time.now
+    self.crystal_rdy_at = Time.now
+    self.solar_rdy_at = Time.now
+    self.hydrogen_rdy_at = Time.now
   end
 
 end

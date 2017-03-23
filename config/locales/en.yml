@@ -26,5 +26,11 @@ en:
       resources:
         title: "Resource buildings"
         metal_mine: "Metal mine"
+        crystal_mine: "Crystal mine"
+        hydrogen_source: "Hydrogen source"
+        solar_power: "Upgrade solar power plant"
         upgrade_metal: "Upgrade metal mine"
+        upgrade_crystal: "Upgrade crystal mine"
+        upgrade_hydrogen: "Upgrade hydrogen source"
+        upgrade_solar: "Upgrade solar power plant"
         upgrading: "Upgrading"

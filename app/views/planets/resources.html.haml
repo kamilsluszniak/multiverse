@@ -1,2 +1,11 @@
-%h1 Planets#resources
-%p Find me in app/views/planets/resources.html.haml
+.container
+  %h1= t('planet.actions.resources.title')
+  %ul.objects-list
+    %li= link_to t('planet.actions.resources.metal_mine'), metal_planet_path(@planet), method: :get
+    %li Metal lvl #{@planet.metal_lvl}
+    %li= link_to t('planet.actions.resources.crystal_mine'), crystal_planet_path(@planet), method: :get
+    %li Crystal lvl #{@planet.crystal_lvl}
+    %li= link_to t('planet.actions.resources.hydrogen_mine'), metal_planet_path(@planet), method: :get
+    %li Hydrogen lvl #{@planet.hydrogen_lvl}
+    %li= link_to t('planet.actions.resources.solar_power'), metal_planet_path(@planet), method: :get
+    %li Solar lvl #{@planet.solar_lvl}

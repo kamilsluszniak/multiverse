@@ -5,7 +5,7 @@ class PlanetsController < ApplicationController
   end
 
   def resources
-    @planet = Planet.where('id = ?', params[:id]).select([:metal_lvl, :crystal_lvl, :hydrogen_lvl, :solar_lvl])
+    @planet = Planet.where('id = ?', params[:id]).select([:id, :metal_lvl, :crystal_lvl, :hydrogen_lvl, :solar_lvl]).first
   end
 
   def research
