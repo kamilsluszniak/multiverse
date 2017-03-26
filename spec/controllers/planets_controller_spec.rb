@@ -2,38 +2,50 @@ require 'rails_helper'
 
 RSpec.describe PlanetsController, type: :controller do
 
-  describe "GET #summary" do
-    it "returns http success" do
-      get :summary
+  describe "GET pages when logged in" do
+    before :each do
+      login_with create( :user )
+    end
+
+    it "returns http success on GET #index" do
+      get :index
       expect(response).to have_http_status(:success)
     end
-  end
 
-  describe "GET #resources" do
-    it "returns http success" do
-      get :resources
+    it "returns http success on GET #resources" do
+      get :resources, params: {:id => 1}
       expect(response).to have_http_status(:success)
     end
+
+    #it "returns http success on GET #research" do
+    #  get :research
+    #  expect(response).to have_http_status(:success)
+    #end
+
+    #it "returns http success on GET #offensive" do
+    #  get :offensive
+    #  expect(response).to have_http_status(:success)
+    #end
+
+    #it "returns http success on GET #defensive" do
+    #  get :defensive
+    #  expect(response).to have_http_status(:success)
+    #end
   end
 
-  describe "GET #research" do
-    it "returns http success" do
-      get :research
-      expect(response).to have_http_status(:success)
+  describe "redirects when not logged in" do
+    before :each do
+      login_with nil
     end
-  end
 
-  describe "GET #offensive" do
-    it "returns http success" do
-      get :offensive
-      expect(response).to have_http_status(:success)
+    it "returns http success on GET #index" do
+      get :index
+      expect(response).to redirect_to( new_user_session_path )
     end
-  end
 
-  describe "GET #defensive" do
-    it "returns http success" do
-      get :defensive
-      expect(response).to have_http_status(:success)
+    it "returns http success on GET #resources" do
+      get :resources, params: {:id => 1}
+      expect(response).to redirect_to( new_user_session_path )
     end
   end
 

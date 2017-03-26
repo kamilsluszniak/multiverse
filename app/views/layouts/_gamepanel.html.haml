@@ -1,7 +1,7 @@
 .gamepanel
   %ul#game-navlist
-    %li= link_to "Planeta", "#"
-    %li= link_to "Wydobycie", "#"
+    %li= link_to t('planet.common.planet'), planet_path(@planet), method: :get
+    %li= link_to t('planet.actions.resources.resources'), resources_planet_path(@planet), method: :get
     %li= link_to "Budynki", "#"
     %li= link_to "Badania", "#"
     %li= link_to "Stocznia", "#"

@@ -1,7 +1,9 @@
 class PlanetsController < ApplicationController
   before_action :authenticate_user!
 
-  def summary
+
+  def index
+    @planet = current_user.planets.first
   end
 
   def resources

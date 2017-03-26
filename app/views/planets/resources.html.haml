@@ -1,4 +1,5 @@
-.container
+= render "layouts/gamepanel"
+.container.game-container
   %h1= t('planet.actions.resources.title')
   %ul.objects-list
     %li= link_to t('planet.actions.resources.metal_mine'), metal_planet_path(@planet), method: :get
