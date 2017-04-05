@@ -10,6 +10,11 @@
 
   <body>
     <%= render "layouts/header" %>
+    <div id="flash-messages">
+        <% flash.each do |key, value| %>
+          <%= content_tag :div, value, :class => "flash #{key}" unless value.blank? %>
+        <% end %>
+    </div>
     <div id="game-field">
       <%= yield %>
     </div>

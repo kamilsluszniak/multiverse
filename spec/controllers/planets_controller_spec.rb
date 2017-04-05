@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe PlanetsController, type: :controller do
 
-  describe "GET pages when logged in" do
+  context "when logged in" do
     let(:user) { create(:user) }
     let(:planet) { create(:planet, user: user) }
 
@@ -16,6 +16,9 @@ RSpec.describe PlanetsController, type: :controller do
     end
 
     it "returns http success on GET #resources" do
+      puts @planet.inspect
+      puts @planet
+      puts "planettttt"
       get :resources, params: {:id => planet.id}
       expect(response).to have_http_status(:success)
     end
@@ -36,17 +39,17 @@ RSpec.describe PlanetsController, type: :controller do
     #end
   end
 
-  describe "redirects when not logged in" do
+  context "when not logged in" do
     before :each do
       login_with nil
     end
 
-    it "returns http success on GET #index" do
+    it "redirects GET #index" do
       get :index
       expect(response).to redirect_to( new_user_session_path )
     end
 
-    it "returns http success on GET #resources" do
+    it "redirects GET #resources" do
       get :resources, params: {:id => 1}
       expect(response).to redirect_to( new_user_session_path )
     end

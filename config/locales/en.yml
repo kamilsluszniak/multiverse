@@ -40,3 +40,4 @@ en:
         upgrading: "Upgrading"
         no-resources: "Not enough resources"
         not_your_planet: "You can acces only your planet!"
+        no_planet: "Planet doesn't exist!"
