@@ -21,11 +21,12 @@
 
 en:
   hello: "Hello world"
+  common:
+    upgrade: "Upgrade"
   planet:
-    common:
-      planet: "Planet"
     actions:
       resources:
+        planet: "Planet"
         resources: "Resources"
         title: "Resource buildings"
         metal_mine: "Metal mine"
@@ -37,3 +38,5 @@ en:
         upgrade_hydrogen: "Upgrade hydrogen source"
         upgrade_solar: "Upgrade solar power plant"
         upgrading: "Upgrading"
+        no-resources: "Not enough resources"
+        not_your_planet: "You can acces only your planet!"

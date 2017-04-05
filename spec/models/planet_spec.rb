@@ -24,4 +24,10 @@ RSpec.describe Planet, type: :model do
   describe 'associations' do
   	it { is_expected.to belong_to :user}
   end
+
+  describe 'calc_build_time' do
+    it "calculates time correctly" do
+      expect(Planet.new.calc_build_time(100, 100)).to eq(13)
+    end
+  end
 end

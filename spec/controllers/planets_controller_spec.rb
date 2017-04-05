@@ -3,8 +3,11 @@ require 'rails_helper'
 RSpec.describe PlanetsController, type: :controller do
 
   describe "GET pages when logged in" do
+    let(:user) { create(:user) }
+    let(:planet) { create(:planet, user: user) }
+
     before :each do
-      login_with create( :user )
+      login_with user
     end
 
     it "returns http success on GET #index" do
@@ -13,7 +16,7 @@ RSpec.describe PlanetsController, type: :controller do
     end
 
     it "returns http success on GET #resources" do
-      get :resources, params: {:id => 1}
+      get :resources, params: {:id => planet.id}
       expect(response).to have_http_status(:success)
     end
 
