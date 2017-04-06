@@ -16,9 +16,6 @@ RSpec.describe PlanetsController, type: :controller do
     end
 
     it "returns http success on GET #resources" do
-      puts @planet.inspect
-      puts @planet
-      puts "planettttt"
       get :resources, params: {:id => planet.id}
       expect(response).to have_http_status(:success)
     end

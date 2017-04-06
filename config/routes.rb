@@ -8,14 +8,8 @@ Rails.application.routes.draw do
   resources :planets do
     member do
       get 'resources', to: 'planets#resources'
-      get :metal, to: 'planets#show_metal'
-      post :metal, to: 'planets#build_metal'
-      get :crystal, to: 'planets#show_crystal'
-      post :crystal, to: 'planets#build_crystal'
-      get :hydrogen, to: 'planets#show_hydrogen'
-      post :hydrogen, to: 'planets#build_hydrogen'
-      get :solar, to: 'planets#show_solar'
-      post :solar, to: 'planets#build_solar'
+      get :object, to: 'planets#show_object'
+      post :object, to: 'planets#build_object'
     end
   end
 

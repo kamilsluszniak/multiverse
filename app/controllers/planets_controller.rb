@@ -1,6 +1,7 @@
 class PlanetsController < ApplicationController
+  include PlanetsHelper
   before_action :authenticate_user!
-
+  respond_to :html, :js
 
   def index
     @planet = current_user.planets.first
@@ -22,13 +23,18 @@ class PlanetsController < ApplicationController
     end
   end
 
-  def show_metal
+  def show_object
     @object = PlanetObject.new
     @object.name = params[:name]
     @planet = Planet.where('id = ?', params[:id]).select([:id, :user_id, query_rdy(@object.name), query_lvl(@object.name)]).first
     if @planet != nil
       if @planet.user_id == current_user.id
-        @object.cost = meta_cost_hash(@object.name)
+        @object.cost = meta_cost_hash(@object.name).to_s
+        @object.time = meta_time(@object.name).to_s
+        @object.lvl = meta_lvl(@object.name).to_s
+        respond_to do |format|
+          format.js
+        end
       else
         flash[:danger] = t('planet.actions.resources.not_your_planet')
         redirect_to root_path
@@ -39,7 +45,7 @@ class PlanetsController < ApplicationController
     end
   end
 
-  def build_metal
+  def build_object
 
   end
 
@@ -64,10 +70,19 @@ class PlanetsController < ApplicationController
     end
 
     def query_lvl(object)
-      (object + "_lvl").to.sym
+      (object + "_lvl").to_sym
     end
 
     def meta_cost_hash(name)
       @planet.public_send("calc_#{name}_cost", eval("@planet.#{name}_lvl"))
     end
+
+    def meta_time(name)
+      eval("@planet.#{name}_rdy_at")
+    end
+
+    def meta_lvl(name)
+      eval("@planet.#{name}_lvl")
+    end
+
 end

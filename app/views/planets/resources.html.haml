@@ -1,15 +1,15 @@
 = render "layouts/gamepanel"
 .container.game-container
   .row
-    = render "layouts/object"
+    = render "layouts/object", object: @object
   .row
     %h1= t('planet.actions.resources.title')
     %ul.objects-list
-      %li= link_to t('planet.actions.resources.metal_mine'), metal_planet_path(@planet), method: :get
+      %li= link_to t('planet.actions.resources.metal_mine'), object_planet_path(@planet, :name => "metal", :format => :js), method: :get, :remote=>true
       %li Metal lvl #{@planet.metal_lvl}
-      %li= link_to t('planet.actions.resources.crystal_mine'), crystal_planet_path(@planet), method: :get
+      %li= link_to t('planet.actions.resources.crystal_mine'), object_planet_path(@planet, :name => "crystal"), method: :get
       %li Crystal lvl #{@planet.crystal_lvl}
-      %li= link_to t('planet.actions.resources.hydrogen_mine'), metal_planet_path(@planet), method: :get
+      %li= link_to t('planet.actions.resources.hydrogen_mine'), object_planet_path(@planet, :name => "hydrogen"), method: :get
       %li Hydrogen lvl #{@planet.hydrogen_lvl}
-      %li= link_to t('planet.actions.resources.solar_power'), metal_planet_path(@planet), method: :get
+      %li= link_to t('planet.actions.resources.solar_power'), object_planet_path(@planet, :name => "solar"), method: :get
       %li Solar lvl #{@planet.solar_lvl}
