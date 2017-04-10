@@ -5,36 +5,22 @@ class Planet < ApplicationRecord
   before_create :set_ready_to_now
 
   def update_resources
-    if self.resources_updated_at
-      seconds = Time.now - self.resources_updated_at
-      self.resources_updated_at = Time.now
-      power_consumption = 10*self.metal_lvl*(1.1**self.metal_lvl) + 10*self.crystal_lvl*(1.1**self.crystal_lvl)
-        + 20*self.hydrogen_lvl*(1.1**self.hydrogen_lvl)
-      efficiency = (self.energy >= power_consumption) ? 1 : (self.energy / power_consumption)
-      self.metal = self.metal + self.metal_lvl*(1.1**self.metal_lvl) * 0.0083333 * seconds * efficiency
-      self.crystal = self.crystal + self.crystal_lvl*(1.1**self.crystal_lvl) * 0.005555556 * seconds * efficiency
-      if self.hydrogen_lvl then
+    seconds = Time.now - self.resources_updated_at
+    self.resources_updated_at = Time.now
+    power_consumption = 10*self.metal_lvl*(1.1**self.metal_lvl) + 10*self.crystal_lvl*(1.1**self.crystal_lvl)
+      + 20*self.hydrogen_lvl*(1.1**self.hydrogen_lvl)
+    efficiency = (self.energy >= power_consumption) ? 1 : (self.energy / power_consumption)
+    self.metal = self.metal + self.metal_lvl*(1.1**self.metal_lvl) * 0.0083333 * seconds * efficiency
+    self.crystal = self.crystal + self.crystal_lvl*(1.1**self.crystal_lvl) * 0.005555556 * seconds * efficiency
+    if self.hydrogen_lvl then
         self.hydrogen = self.hydrogen + self.hydrogen_lvl*(1.1**self.hydrogen_lvl) * 0.00277778 * seconds * efficiency
-      end
-      self.energy = self.solar_lvl**1.15 * 40
     end
+    self.energy = self.solar_lvl**1.15 * 40
   end
 
   def update_resources!
-    if self.resources_updated_at
-      seconds = Time.now - self.resources_updated_at
-      self.resources_updated_at = Time.now
-      power_consumption = 10*self.metal_lvl*(1.1**self.metal_lvl) + 10*self.crystal_lvl*(1.1**self.crystal_lvl)
-        + 20*self.hydrogen_lvl*(1.1**self.hydrogen_lvl)
-      efficiency = (self.energy >= power_consumption) ? 1 : (self.energy / power_consumption)
-      self.metal = self.metal + self.metal_lvl*(1.1**self.metal_lvl) * 0.0083333 * seconds * efficiency
-      self.crystal = self.crystal + self.crystal_lvl*(1.1**self.crystal_lvl) * 0.005555556 * seconds * efficiency
-      if self.hydrogen_lvl then
-        self.hydrogen = self.hydrogen + self.hydrogen_lvl*(1.1**self.hydrogen_lvl) * 0.00277778 * seconds * efficiency
-      end
-      self.energy = self.solar_lvl**1.15 * 40
-      self.save!
-    end
+    self.update_resources
+    self.save!
   end
 
   def upgrade_metal
