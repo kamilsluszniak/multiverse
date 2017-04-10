@@ -29,7 +29,7 @@ class PlanetsController < ApplicationController
     @planet = Planet.where('id = ?', params[:id]).select([:id, :user_id, query_rdy(@object.name), query_lvl(@object.name)]).first
     if @planet != nil
       if @planet.user_id == current_user.id
-        @object.cost = meta_cost_hash(@object.name).to_s
+        @object.cost = meta_cost_hash(@object.name)
         @object.time = meta_time(@object.name).to_s
         @object.lvl = meta_lvl(@object.name).to_s
         respond_to do |format|
