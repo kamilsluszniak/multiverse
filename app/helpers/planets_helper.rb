@@ -15,7 +15,7 @@ module PlanetsHelper
     def print_cost
       cost = ""
       @cost.each do |key, value|
-        cost = cost + key.to_s.capitalize.split("_").first + ": " + value.round(2).to_s
+        cost = cost + key.to_s.capitalize.split("_").first + ": " + value.round(1).to_s
         cost << " "
       end
       return cost

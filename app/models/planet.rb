@@ -34,7 +34,6 @@ class Planet < ApplicationRecord
       self.crystal = crystal - crystal_cost
       self.metal_lvl = lvl + 1
       self.metal_rdy_at = Time.now + building_calc_build_time(cost[:metal_cost], cost[:crystal_cost])
-      self.save!
     else
       return false
     end
@@ -51,7 +50,6 @@ class Planet < ApplicationRecord
       self.crystal = crystal - cost
       self.crystal_lvl = lvl + 1
       self.crystal_rdy_at = Time.now + building_calc_build_time(cost[:metal_cost], cost[:crystal_cost])
-      self.save!
     else
       return false
     end
@@ -68,7 +66,6 @@ class Planet < ApplicationRecord
       self.crystal = crystal - cost
       self.hydrogen_lvl = lvl + 1
       self.hydrogen_rdy_at = Time.now + building_calc_build_time(cost[:metal_cost], cost[:crystal_cost])
-      self.save!
     else
       return false
     end
@@ -85,7 +82,6 @@ class Planet < ApplicationRecord
       self.crystal = crystal - cost
       self.solar_lvl = lvl + 1
       self.solar_rdy_at = Time.now + building_calc_build_time(cost[:metal_cost], cost[:crystal_cost])
-      self.save!
     else
       return false
     end
@@ -98,7 +94,7 @@ class Planet < ApplicationRecord
     self.hydrogen_rdy_at = Time.now
   end
 
-  def building_calc_build_time(metal_cost, crystal_cost)
+  def calc_build_time(metal_cost, crystal_cost)
     (metal_cost + crystal_cost)/15
   end
 

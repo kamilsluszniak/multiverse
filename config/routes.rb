@@ -9,7 +9,7 @@ Rails.application.routes.draw do
     member do
       get 'resources', to: 'planets#resources'
       get :object, to: 'planets#show_object'
-      post :object, to: 'planets#build_object'
+      post :object, to: 'planets#update_object'
     end
   end
 

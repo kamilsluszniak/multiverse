@@ -27,7 +27,7 @@ RSpec.describe Planet, type: :model do
 
   describe 'calc_build_time' do
     it "calculates time correctly" do
-      expect(Planet.new.building_calc_build_time(100, 100)).to eq(13)
+      expect(Planet.new.calc_build_time(100, 100)).to eq(13)
     end
   end
 end
