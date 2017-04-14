@@ -72,7 +72,7 @@ group :test do
   gem 'capybara'
   gem 'database_cleaner'
   gem 'launchy'
-  gem 'selenium-webdriver'
+  gem "capybara-webkit"
   gem 'shoulda-matchers', require: false
 end
 

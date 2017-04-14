@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :planet do
     association :system
-    association :user
+    association :user, factory: :user
     name { Faker::StarWars.planet }
   end
 

@@ -27,12 +27,12 @@ class PlanetsController < ApplicationController
     @object = PlanetObject.new
     @object.name = params[:name]
     @planet = Planet.where('id = ?', params[:id]).select([:id, :user_id, query_rdy(@object.name), query_lvl(@object.name)]).first
-    if @planet != nil
+    if @planet.present?
       if @planet.user_id == current_user.id
-        @object.cost = meta_cost_hash(@object.name, @planet)
-        ready_at = meta_time(@object.name, @planet)
+        @object.cost = meta_cost_hash(@object.name)
+        ready_at = meta_time(@object.name)
         @object.time = (ready_at > Time.now) ? (ready_at - Time.now) : nil
-        @object.lvl = meta_lvl(@object.name, @planet).to_s
+        @object.lvl = meta_lvl(@object.name).to_s
         respond_to do |format|
           format.js
         end
@@ -46,23 +46,42 @@ class PlanetsController < ApplicationController
     end
   end
 
-  def update_object
+  def build_object
     @object = PlanetObject.new
     @object.name = params[:name]
-    @planet = Planet.where('id = ?', params[:id]).select([:id, :user_id, query_rdy(@object.name), query_lvl(@object.name)]).first
-    if @planet != nil
+    @planet = Planet.where('id = ?', params[:id]).select([:id, :user_id, :name, :resources_updated_at, :metal, :crystal, :hydrogen, :energy, query_rdy(@object.name), :metal_lvl, :crystal_lvl, :hydrogen_lvl, :solar_lvl]).first
+    if @planet.present?
       if (@planet.user_id == current_user.id)
-        @object.cost = meta_cost_hash(@object.name)
-        if @object.time <= Time.now
-          @object.time = meta_time(@object.name).to_s
-          meta_upgrade(@object.name, @planet)
-          if @planet.save!
-            respond_to do |format|
-              format.js
+        @object.time = meta_time(@object.name).to_s
+        if (@object.time <= Time.now)
+          @object.cost = meta_cost_hash(@object.name)
+          @planet.update_resources
+          if (@object.cost[:metal].nil? || (@object.cost[:metal] < @planet.metal)) &&
+            (@object.cost[:crystal].nil? || (@object.cost[:crystal] < @planet.metal)) &&
+            (@object.cost[:hydrogen].nil? || (@object.cost[:hydrogen] < @planet.metal)) then
+
+
+            meta_build(@object.name)
+            @object.time = meta_time(@object.name).to_s
+            if @planet.save!
+              respond_to do |format|
+                format.js
+              end
             end
+          else
+            flash.now[:danger] = t('common.no-resources')
           end
+        else
+          flash[:danger] = t('common.cooldown')
+          redirect_to root_path
         end
+      else
+        flash[:danger] = t('planet.actions.resources.not_your_planet')
+        redirect_to root_path
       end
+    else
+      flash[:danger] = t('planet.actions.resources.no_planet')
+      redirect_to root_path
     end
   end
 
@@ -90,19 +109,19 @@ class PlanetsController < ApplicationController
       (object + "_lvl").to_sym
     end
 
-    def meta_cost_hash(name, planet)
-      planet.public_send("calc_#{name}_cost", eval("planet.#{name}_lvl"))
+    def meta_cost_hash(name)
+      @planet.public_send("calc_#{name}_cost", eval("@planet.#{name}_lvl"))
     end
 
-    def meta_time(name, planet)
-      eval("planet.#{name}_rdy_at")
+    def meta_time(name)
+      eval("@planet.#{name}_rdy_at")
     end
 
-    def meta_lvl(name, planet)
-      eval("planet.#{name}_lvl")
+    def meta_lvl(name)
+      eval("@planet.#{name}_lvl")
     end
 
-    def meta_upgrade(name, planet)
-      eval("planet.upgrade_#{name}")
+    def meta_build(name)
+      eval("@planet.build_#{name}")
     end
 end

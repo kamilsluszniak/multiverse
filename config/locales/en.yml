@@ -23,6 +23,8 @@ en:
   hello: "Hello world"
   common:
     upgrade: "Upgrade"
+    cooldown: "Wait for the previous task end or cancel it"
+    no-resources: "You dont have enough resources"
   planet:
     actions:
       resources:

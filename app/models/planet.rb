@@ -1,6 +1,6 @@
 class Planet < ApplicationRecord
   belongs_to :user, optional: true
-  belongs_to :system
+  belongs_to :system, optional: true
   validates :name, presence: true, allow_blank: false, length: { maximum: 16 }
   before_create :set_ready_to_now
 
@@ -23,68 +23,48 @@ class Planet < ApplicationRecord
     self.save!
   end
 
-  def upgrade_metal
-    self.update_resources
+  def build_metal
     metal = self.metal
     crystal = self.crystal
     lvl = self.metal_lvl
     cost = calc_metal_cost(lvl)
-    if (cost[:metal_cost] <= metal) && (cost[:crystal_cost] <= crystal)
-      self.metal = metal - metal_cost
-      self.crystal = crystal - crystal_cost
-      self.metal_lvl = lvl + 1
-      self.metal_rdy_at = Time.now + building_calc_build_time(cost[:metal_cost], cost[:crystal_cost])
-    else
-      return false
-    end
+    self.metal = metal - cost[:metal]
+    self.crystal = crystal - cost[:crystal]
+    self.metal_lvl = lvl + 1
+    self.metal_rdy_at = Time.now + building_calc_build_time(cost[:metal], cost[:crystal])
   end
 
-  def upgrade_crystal
-    self.update_resources
+  def build_crystal
     metal = self.metal
     crystal = self.crystal
     lvl = self.crystal_lvl
     cost = calc_crystal_cost(lvl)
-    if (cost[:metal_cost] <= metal) && (cost[:crystal_cost] <= crystal)
-      self.metal = metal - cost
-      self.crystal = crystal - cost
-      self.crystal_lvl = lvl + 1
-      self.crystal_rdy_at = Time.now + building_calc_build_time(cost[:metal_cost], cost[:crystal_cost])
-    else
-      return false
-    end
+    self.metal = metal - cost[:metal]
+    self.crystal = crystal - cost[:crystal]
+    self.crystal_lvl = lvl + 1
+    self.crystal_rdy_at = Time.now + building_calc_build_time(cost[:metal], cost[:crystal])
   end
 
-  def upgrade_hydrogen
-    self.update_resources
+  def build_hydrogen
     metal = self.metal
     crystal = self.crystal
     lvl = self.hydrogen_lvl
     cost = calc_hydrogen_cost(lvl)
-    if (cost[:metal_cost] <= metal) && (cost[:crystal_cost] <= crystal)
-      self.metal = metal - cost
-      self.crystal = crystal - cost
-      self.hydrogen_lvl = lvl + 1
-      self.hydrogen_rdy_at = Time.now + building_calc_build_time(cost[:metal_cost], cost[:crystal_cost])
-    else
-      return false
-    end
+    self.metal = metal - cost[:metal]
+    self.crystal = crystal - cost[:crystal]
+    self.hydrogen_lvl = lvl + 1
+    self.hydrogen_rdy_at = Time.now + building_calc_build_time(cost[:metal], cost[:crystal])
   end
 
-  def upgrade_solar
-    self.update_resources
+  def build_solar
     metal = self.metal
     crystal = self.crystal
     lvl = self.solar_lvl
     cost = calc_solar_cost(lvl)
-    if (cost[:metal_cost] <= metal) && (cost[:crystal_cost] <= crystal)
-      self.metal = metal - cost
-      self.crystal = crystal - cost
-      self.solar_lvl = lvl + 1
-      self.solar_rdy_at = Time.now + building_calc_build_time(cost[:metal_cost], cost[:crystal_cost])
-    else
-      return false
-    end
+    self.metal = metal - cost[:metal]
+    self.crystal = crystal - cost[:crystal]
+    self.solar_lvl = lvl + 1
+    self.solar_rdy_at = Time.now + building_calc_build_time(cost[:metal], cost[:crystal])
   end
 
   def set_ready_to_now
@@ -94,32 +74,32 @@ class Planet < ApplicationRecord
     self.hydrogen_rdy_at = Time.now
   end
 
-  def calc_build_time(metal_cost, crystal_cost)
+  def building_calc_build_time(metal_cost, crystal_cost)
     (metal_cost + crystal_cost)/15
   end
 
   def calc_metal_cost(lvl)
     metal_cost = 60 * 1.5**lvl
     crystal_cost = 45 * 1.5**lvl
-    return {:metal_cost => metal_cost, :crystal_cost => crystal_cost}
+    return {:metal => metal_cost, :crystal => crystal_cost}
   end
 
   def calc_crystal_cost(lvl)
     metal_cost = 48 * 1.6**lvl
     crystal_cost = 23 * 1.6**lvl
-    return {:metal_cost => metal_cost, :crystal_cost => crystal_cost}
+    return {:metal => metal_cost, :crystal => crystal_cost}
   end
 
   def calc_hydrogen_cost(lvl)
     metal_cost = 225 * 1.5**lvl
     crystal_cost = 75 * 1.5**lvl
-    return {:metal_cost => metal_cost, :crystal_cost => crystal_cost}
+    return {:metal => metal_cost, :crystal => crystal_cost}
   end
 
   def calc_solar_cost(lvl)
     metal_cost = 225 * 1.5**lvl
     crystal_cost = 75 * 1.5**lvl
-    return {:metal_cost => metal_cost, :crystal_cost => crystal_cost}
+    return {:metal => metal_cost, :crystal => crystal_cost}
   end
 
 end

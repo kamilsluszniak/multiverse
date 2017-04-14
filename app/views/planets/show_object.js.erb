@@ -1,16 +1,16 @@
 if ($(".object-hidden").css('display') != 'none'){
   $(".object-hidden").slideUp('normal', function(){
     $("#object-name").text("<%=  @object.name %>");
-    $("#selected-object-time").text("<%=  if @object.time then @object.time else "" end %>");
-    $("#selected-object-nextlvl").text("<%=  @object.lvl %>");
+    $("#selected-object-time").text("<%=  if @object.time.present? then @object.time else "" end %>");
+    $("#selected-object-lvl").text("<%=  @object.lvl %>");
     $("#selected-object-cost").text("<%=  @object.print_cost %>");
     $("#upgrade_btn").html("<%= j(link_to t('common.upgrade'), object_planet_path(@planet, :name => @object.name, :format => :js), method: :post, :remote=>true, id: "upgrade_btn") %>");
     $(".object-hidden").slideDown();
   });
 } else {
   $("#object-name").text("<%=  @object.name %>");
-  $("#selected-object-time").text("<%=  @object.time %>");
-  $("#selected-object-nextlvl").text("<%=  @object.lvl %>");
+  $("#selected-object-time").text("<%=  if @object.time.present? then @object.time else "" end %>");
+  $("#selected-object-lvl").text("<%=  @object.lvl %>");
   $("#selected-object-cost").text("<%=  @object.print_cost %>");
   $("#upgrade_btn").html("<%= j(link_to t('common.upgrade'), object_planet_path(@planet, :name => @object.name, :format => :js), method: :post, :remote=>true, id: "upgrade_btn") %>");
   $(".object-hidden").slideDown();

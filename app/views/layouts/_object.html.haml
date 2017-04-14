@@ -5,7 +5,7 @@
       %li
         %p#selected-object-time
       %li
-        %p#selected-object-nextlvl
+        %p#selected-object-lvl
       %li
         %p#selected-object-cost
       %li= link_to t('common.upgrade'), object_planet_path(@planet, :name => "#", :format => :js), method: :post, :remote=>true, id: "upgrade_btn"
