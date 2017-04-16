@@ -12,8 +12,9 @@ RSpec.feature "User upgrades" do
       visit resources_planet_path(planet)
       expect(page).to have_content(I18n.t('planet.actions.resources.title'))
       click_on (I18n.t('planet.actions.resources.metal_mine'))
+      expect(page).to have_css("#object-name", text: "metal")
       click_link (I18n.t('common.upgrade'))
-      expect(page).to have_content(I18n.t('planet.actions.resources.no-resources'))
+      expect(page).to have_content(I18n.t('common.no-resources'))
     end
 
 

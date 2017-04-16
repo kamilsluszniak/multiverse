@@ -23,6 +23,7 @@ en:
   hello: "Hello world"
   common:
     upgrade: "Upgrade"
+    upgrading: "Upgrading"
     cooldown: "Wait for the previous task end or cancel it"
     no-resources: "You dont have enough resources"
   planet:
@@ -34,12 +35,10 @@ en:
         metal_mine: "Metal mine"
         crystal_mine: "Crystal mine"
         hydrogen_source: "Hydrogen source"
-        solar_power: "Upgrade solar power plant"
+        solar_power: "Solar power plant"
         upgrade_metal: "Upgrade metal mine"
         upgrade_crystal: "Upgrade crystal mine"
         upgrade_hydrogen: "Upgrade hydrogen source"
-        upgrade_solar: "Upgrade solar power plant"
-        upgrading: "Upgrading"
-        no-resources: "Not enough resources"
+        upgrade_solar: "Upgrade solar power plant"        
         not_your_planet: "You can acces only your planet!"
         no_planet: "Planet doesn't exist!"

@@ -4,7 +4,8 @@ class PlanetsController < ApplicationController
   respond_to :html, :js
 
   def index
-    @planet = current_user.planets.first
+    @planets = current_user.planets.all
+    respond_with(@planets)
   end
 
   def resources
@@ -57,8 +58,8 @@ class PlanetsController < ApplicationController
           @object.cost = meta_cost_hash(@object.name)
           @planet.update_resources
           if (@object.cost[:metal].nil? || (@object.cost[:metal] < @planet.metal)) &&
-            (@object.cost[:crystal].nil? || (@object.cost[:crystal] < @planet.metal)) &&
-            (@object.cost[:hydrogen].nil? || (@object.cost[:hydrogen] < @planet.metal)) then
+            (@object.cost[:crystal].nil? || (@object.cost[:crystal] < @planet.crystal)) &&
+            (@object.cost[:hydrogen].nil? || (@object.cost[:hydrogen] < @planet.hydrogen)) then
 
             @object.time = (meta_build(@object.name) - Time.now).to_i
             @object.lvl = meta_lvl(@object.name).to_s
@@ -69,11 +70,10 @@ class PlanetsController < ApplicationController
               end
             end
           else
-            flash.now[:danger] = t('common.no-resources')
+            render js: "$('#selected-object-time').text('#{t('common.no-resources')}')"
           end
         else
-          flash[:danger] = t('common.cooldown')
-          redirect_to root_path
+          render js: "$('#selected-object-time').text('#{t('common.cooldown')}')" 
         end
       else
         flash[:danger] = t('planet.actions.resources.not_your_planet')

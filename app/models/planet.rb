@@ -3,6 +3,7 @@ class Planet < ApplicationRecord
   belongs_to :system, optional: true
   validates :name, presence: true, allow_blank: false, length: { maximum: 16 }
   before_create :set_ready_to_now
+  before_create :update_resources
 
   def update_resources
     seconds = Time.now - self.resources_updated_at
@@ -72,6 +73,10 @@ class Planet < ApplicationRecord
     self.crystal_rdy_at = Time.now
     self.solar_rdy_at = Time.now
     self.hydrogen_rdy_at = Time.now
+  end
+
+  def set_updated_to_now
+    self.resources_updated_at = Time.now
   end
 
   def building_calc_build_time(metal_cost, crystal_cost)
