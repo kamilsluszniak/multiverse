@@ -15,6 +15,8 @@ gem 'faker'
 gem 'jquery-datatables-rails', '~> 3.4.0'
 gem 'simple_form'
 gem "responders"
+gem 'activemodel-serializers-xml', git: 'https://github.com/rails/activemodel-serializers-xml'
+gem 'draper', '3.0.0.pre1'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.1'
 # Use postgresql as the database for Active Record

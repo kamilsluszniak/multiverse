@@ -31,7 +31,7 @@ class PlanetsController < ApplicationController
       if @planet.user_id == current_user.id
         @object.cost = meta_cost_hash(@object.name)
         ready_at = meta_time(@object.name)
-        @object.time = (ready_at > Time.now) ? (ready_at - Time.now) : nil
+        @object.time = (ready_at > Time.now) ? (ready_at - Time.now).to_i : nil
         @object.lvl = meta_lvl(@object.name).to_s
         respond_to do |format|
           format.js
@@ -60,9 +60,9 @@ class PlanetsController < ApplicationController
             (@object.cost[:crystal].nil? || (@object.cost[:crystal] < @planet.metal)) &&
             (@object.cost[:hydrogen].nil? || (@object.cost[:hydrogen] < @planet.metal)) then
 
+            @object.time = (meta_build(@object.name) - Time.now).to_i
+            @object.lvl = meta_lvl(@object.name).to_s
 
-            meta_build(@object.name)
-            @object.time = meta_time(@object.name).to_s
             if @planet.save!
               respond_to do |format|
                 format.js
